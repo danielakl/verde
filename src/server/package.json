@@ -10,6 +10,10 @@
   "keywords": [],
   "author": "Daniel Aune Klock",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielakl/verde.git"
+  },
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.3"
