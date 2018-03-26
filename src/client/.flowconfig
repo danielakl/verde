@@ -1,0 +1,2 @@
+[ignore]
+<PROJECT_ROOT>src/client/node_modules/.*

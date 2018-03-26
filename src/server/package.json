@@ -1,0 +1,25 @@
+{
+  "name": "verde_server",
+  "version": "1.0.0",
+  "description": "A simple nodejs server serving news articles. The server usees a REST API to create and serve news articles.",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "nodemon src/server.js --exec babel-node",
+    "flow": "flow"
+  },
+  "keywords": [],
+  "author": "Daniel Aune Klock",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-flow": "^6.23.0",
+    "flow-bin": "^0.67.1",
+    "nodemon": "^1.17.2"
+  }
+}
