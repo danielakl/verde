@@ -2,7 +2,7 @@
 
 ## Instructions
 1. Install [Node.js](https://nodejs.org/en/).
-2. Install the Flow static type checker, and the Atom addon Nuclide:
+2. Install the Flow static type checker:
     ```sh
     npm install -g flow-bin
     ```
