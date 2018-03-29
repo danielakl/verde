@@ -2,7 +2,9 @@
 "use strict";
 
 import express from 'express';
+
 import Article from "../database/models/Article";
+import ArticleService from '../database/service/ArticleService';
 
 const router = express.Router();
 
@@ -10,16 +12,19 @@ const router = express.Router();
 let articles = [new Article(0, 'title1', 'abstract1', 'text1'), new Article(1, 'title2', 'abstract2', 'text2'), new Article(2, 'title3', 'abstract3', 'text3')];
 
 router.get("/", (req: express$Request, res: express$Response) => {
-    res.json(articles);
+    ArticleService.getArticles().then(articles => {
+        res.json(articles);
+    }).catch(error => {
+        res.status(error.status | 500).json(error);
+    });
 });
 
 router.get("/:id", (req: express$Request, res: express$Response) => {
-    const article = articles.find(article => article.id === Number(req.params.id));
-    if (article) {
+    ArticleService.getArticle(req.params.id).then(article => {
         res.json(article);
-        return;
-    }
-    res.sendStatus(404);
+    }).catch(error => {
+        res.status(error.status | 500).json(error);
+    });
 });
 
 router.post("/", (req: express$Request, res: express$Response) => {
