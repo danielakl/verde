@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-import Article from "../data-object/Article";
+import Article from "../DTO/Article";
 import Alert from "./Alert";
 import Card from "./Card";
 import ArticleService from "../service/ArticleService";

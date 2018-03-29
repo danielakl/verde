@@ -4,7 +4,7 @@
   "description": "A simple nodejs server serving news articles. The server usees a REST API to create and serve news articles.",
   "main": "src/server.js",
   "scripts": {
-    "start": "nodemon src/server.js --exec babel-node",
+    "start": "nodemon src/app.js --exec babel-node",
     "flow": "flow"
   },
   "keywords": [],
@@ -16,7 +16,10 @@
   },
   "dependencies": {
     "body-parser": "^1.18.2",
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "knex": "^0.14.4",
+    "mysql2": "^1.5.3",
+    "objection": "^1.0.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

@@ -1,6 +1,6 @@
 // @flow
 
-import Article from "../data-object/Article";
+import Article from "../DTO/Article";
 
 class ArticleService {
     static getArticles(): Promise<Article[]> {
