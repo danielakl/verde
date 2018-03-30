@@ -12,16 +12,11 @@ class Article extends BaseModel {
     title: string;
     abstract: string;
     text: string;
+    author: string;
     votes: number;
 
-    constructor(id: number, title: string, abstract: string, text: string, votes: number) {
+    constructor() {
         super();
-        this.id = id;
-        this.title = title;
-        this.abstract = abstract;
-        this.text = text;
-        votes = parseInt(votes);
-        this.votes = isNaN(votes) ? 0 : votes;
     }
 
     static get tableName():string {
@@ -33,14 +28,15 @@ class Article extends BaseModel {
             type: 'object',
             required: ['title', 'abstract', 'text'],
             properties: {
-                id: {type: 'integer'},
-                categoryId: {type: 'integer'},
-                title: {type: 'string', minLength: 1, maxLength: 255},
-                abstract: {type: 'string', minLength: 1, maxLength: 255},
-                text: {type: 'string', minLength: 1, maxLength: 16777215},
-                votes: {type: 'integer', default: 0},
-                createdAt: {type: 'string'},
-                updatedAt: {type: ['string', 'null']}
+                id: {type: 'integer'},                                      // Generated
+                categoryId: {type: ['integer', 'null']},                    // Nullable
+                title: {type: 'string', minLength: 1, maxLength: 255},      // Required
+                abstract: {type: 'string', minLength: 1, maxLength: 255},   // Required
+                text: {type: 'string', minLength: 1, maxLength: 16777215},  // Required
+                author: {type: 'string', minLength: 3, maxLength: 255},     // Defaults to 'Anonymous'
+                votes: {type: 'integer', default: 0},                       // Defaults to '0'
+                createdAt: {type: 'timestamp'},                             // Generated
+                updatedAt: {type: ['timestamp', 'null']}                    // Null at creation
             }
         }
     }
@@ -49,6 +45,7 @@ class Article extends BaseModel {
         category: {
             relation: Model.HasOneRelation,
             modelClass: path.join(__dirname, "Category"),
+            filter: query => query.select('category'),
             join: {
                 from: "articles.categoryId",
                 to: "categories.id"

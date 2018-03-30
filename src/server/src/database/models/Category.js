@@ -28,8 +28,8 @@ class Category extends BaseModel {
             properties: {
                 id: {type: 'integer'},
                 category: {type: 'string', minLength: 1, maxLength: 255},
-                createdAt: {type: 'string'},
-                updatedAt: {type: ['string', 'null']}
+                createdAt: {type: 'timestamp'},
+                updatedAt: {type: ['timestamp', 'null']}
             }
         }
     }
@@ -38,6 +38,7 @@ class Category extends BaseModel {
         articles: {
             relation: Model.HasManyRelation,
             modelClass: path.join(__dirname, "Article"),
+            filter: query => query.select('id'),
             join: {
                 from: "categories.id",
                 to: "articles.categoryId"

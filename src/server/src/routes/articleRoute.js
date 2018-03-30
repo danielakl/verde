@@ -3,58 +3,74 @@
 
 import express from 'express';
 
-import Article from "../database/models/Article";
 import ArticleService from '../database/service/ArticleService';
 
 const router = express.Router();
 
-// The data is currently stored in memory
-let articles = [new Article(0, 'title1', 'abstract1', 'text1'), new Article(1, 'title2', 'abstract2', 'text2'), new Article(2, 'title3', 'abstract3', 'text3')];
-
+/**
+ * Get all articles, or filtered by a query.
+ */
 router.get("/", (req: express$Request, res: express$Response) => {
-    ArticleService.getArticles().then(articles => {
+    const query: string | void = req.query.query ? req.query.query.toString() : undefined;
+    ArticleService.getArticles(query).then(articles => {
         res.json(articles);
     }).catch(error => {
+        console.error(error);
         res.status(error.status | 500).json(error);
     });
 });
 
+/**
+ * Get the article with the given id.
+ */
 router.get("/:id", (req: express$Request, res: express$Response) => {
     ArticleService.getArticle(req.params.id).then(article => {
         res.json(article);
     }).catch(error => {
+        console.error(error);
         res.status(error.status | 500).json(error);
     });
 });
 
+/**
+ * Create a new article.
+ */
 router.post("/", (req: express$Request, res: express$Response) => {
-    if (req.body) {
-        const {title, abstract, text} = req.body;
-        if (title && abstract && text) {
-            if (typeof title === 'string' && typeof abstract === 'string' && typeof text === 'string') {
-                articles.push(new Article(4, title, abstract, text));
-                res.sendStatus(201);
-                return;
-            }
-        }
-    }
-    res.sendStatus(400);
-});
-
-router.put("/:id", (req: express$Request, res: express$Response) => {
-    articles = articles.map(article => {
-        if (article.id === Number(req.params.id)) {
-            const {title, abstract, text} = req.body;
-            return new Article(article.id, title, abstract, text);
-        }
-        return article;
+    ArticleService.createArticle(req.body).then(article => {
+        res.status(201).json(article);
+    }).catch(error => {
+        console.error(error);
+        res.status(error.code | 500).json(error);
     });
-    res.sendStatus(204);
 });
 
+/**
+ * Fully update an article, required fields must be provided.
+ */
+router.put("/:id", (req: express$Request, res: express$Response) => {
+    let id = parseInt(req.params.id);
+    id = isNaN(id) ? parseInt(req.body.id) : id;
+    req.body.id = id;
+    ArticleService.updateArticle(req.body).then(article => {
+        res.json(article);
+    }).catch(error => {
+        console.error(error);
+        res.status(error.code | 500).json(error);
+    });
+});
+
+/**
+ * Delete an article with the given id.
+ */
 router.delete("/:id", (req: express$Request, res: express$Response) => {
-    articles = articles.filter(article => !(article.id === req.params.id));
-    res.sendStatus(204);
+    let id = parseInt(req.params.id);
+    id = isNaN(id) ? parseInt(req.body.id) : id;
+    ArticleService.deleteArticle(id).then(() => {
+        res.sendStatus(200);
+    }).catch(error => {
+        console.error(error);
+        res.status(error.code | 500).json(error);
+    });
 });
 
 export default router;

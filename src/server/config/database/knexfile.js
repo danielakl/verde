@@ -9,10 +9,13 @@ module.exports = {
             host: '127.0.0.1',
             database: 'verde',
             user: 'root',
-            password: 'secret_password'
+            password: '38956'
         },
         seeds: {
             directory: './seeds'
+        },
+        migrations: {
+            directory: './config/database/migrations'
         }
     },
 
@@ -22,14 +25,15 @@ module.exports = {
             host: '127.0.0.1',
             database: 'verde',
             user:     'root',
-            password: 'secret_password'
+            password: '38956'
         },
         pool: {
             min: 2,
             max: 10
         },
         migrations: {
-            tableName: 'knex_migrations'
+            tableName: 'knex_migrations',
+            directory: './config/database/migrations'
         }
     },
 
@@ -39,14 +43,15 @@ module.exports = {
             host: '127.0.0.1',
             database: 'verde',
             user:     'root',
-            password: 'secret_password'
+            password: '38956'
         },
         pool: {
             min: 2,
             max: 50
         },
         migrations: {
-            tableName: 'knex_migrations'
+            tableName: 'knex_migrations',
+            directory: "./config/database/migrations"
         }
     }
 };

@@ -38,8 +38,8 @@ class Comment extends BaseModel {
                 text: {type: 'string', minLength: 1, maxLength: 255},
                 author: {type: 'string', minLength: 3, maxLength: 255, default: "Anonymous"},
                 votes: {type: 'integer', default: 0},
-                createdAt: {type: 'string'},
-                updatedAt: {type: ['string', 'null']}
+                createdAt: {type: 'timestamp'},
+                updatedAt: {type: ['timestamp', 'null']}
             }
         }
     }
