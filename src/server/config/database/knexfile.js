@@ -6,10 +6,10 @@ module.exports = {
     development: {
         client: 'mysql2',
         connection: {
-            host: '127.0.0.1',
-            database: 'verde',
-            user: 'root',
-            password: '38956'
+            host: 'mysql.stud.iie.ntnu.no',
+            database: 'g_tdat2003_t7',
+            user: 'g_tdat2003_t7',
+            password: 'nMzfg38c'
         },
         seeds: {
             directory: './seeds'
@@ -22,10 +22,10 @@ module.exports = {
     staging: {
         client: 'mysql2',
         connection: {
-            host: '127.0.0.1',
-            database: 'verde',
-            user:     'root',
-            password: '38956'
+            host: 'mysql.stud.iie.ntnu.no',
+            database: 'g_tdat2003_t7',
+            user:     'g_tdat2003_t7',
+            password: 'nMzfg38c'
         },
         pool: {
             min: 2,
@@ -40,10 +40,10 @@ module.exports = {
     production: {
         client: 'mysql2',
         connection: {
-            host: '127.0.0.1',
-            database: 'verde',
-            user:     'root',
-            password: '38956'
+            host: 'mysql.stud.iie.ntnu.no',
+            database: 'g_tdat2003_t7',
+            user:     'g_tdat2003_t7',
+            password: 'nMzfg38c'
         },
         pool: {
             min: 2,
