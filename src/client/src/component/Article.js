@@ -1,55 +1,56 @@
 // @flow
+'use strict';
 
 import * as React from "react";
-import {Route} from 'react-router-dom';
+import {Link, Route} from 'react-router-dom';
+import Moment from 'moment';
 
-import Alert from "./Alert";
-import Card from "./Card";
-import Table from "./Table";
-import NewArticle from "./NewArticle";
-import ArticleDetails from "./ArticleDetails";
-import ArticleService from "../service/ArticleService";
-
-class Article extends React.Component<{}> {
-    table: Table;
-    newArticle: NewArticle;
-
-    render() {
-        return (
-            <div>
-                <Card title="Articles">
-                    <Table ref={e => (this.table = (e) ? e : this.table)} header={['Title', 'Abstract']} />
-                </Card>
-                <Route exact path="/articles/:id" component={ArticleDetails} />
-                <NewArticle ref={e => (this.newArticle = (e) ? e : this.newArticle)} />
+const Article = (props: {}) => {
+    const {renderType} = props;
+    const {id, title, abstract, text, author, votes, comments} = props.data;
+    const createdAt = Moment(props.data.createdAt).fromNow();
+    if (renderType === 'card') {
+        return (<Link to={`/article/${id}`} className="col-sm-12">
+            <div className="card">
+                <div className="card-body">
+                    <h5 className="card-title">{title}<span className="float-right"><small>Votes: {votes}</small></span></h5>
+                    <h7 className="card-subtitle">{abstract}</h7>
+                    <p className="card-text"><small className="text-muted">
+                        By {author}
+                        <span className="float-right">Written {createdAt}</span>
+                    </small></p>
+                </div>
             </div>
-        );
+        </Link>);
     }
-
-    // Helper function to update component
-    update() {
-        ArticleService.getArticles()
-            .then(articles => {
-                if (this.table) this.table.setRows(articles.map(article => ({id: article.id, cells: [article.title, article.abstract]})));
-            })
-            .catch((error: Error) => {
-                Alert.danger('Error getting articles: ' + error.message);
-            });
-    }
-
-    componentDidMount() {
-        if (this.table) {
-            this.table.onRowClick.add(rowId => {
-                history.push('/articles/' + rowId);
-            });
-        }
-        if (this.newArticle) {
-            this.newArticle.onAdd.add(() => {
-                this.update();
-            });
-        }
-        this.update();
-    }
-}
+    return (
+        <article className="card">
+            <div className="card-body">
+                <h2>{title}</h2>
+                <p className="lead">{abstract}</p>
+                <hr/>
+                <p>By {author} - Written {createdAt} - Votes: {votes} - Comments: {comments.length}</p>
+                <hr/>
+                <p>{text}</p>
+                <hr/>
+                <div className="well">
+                    <h4>Leave a Comment:</h4>
+                    <form>
+                        <div className="form-group">
+                            <textarea className="form-control" rows="3"/>
+                        </div>
+                        <button className="btn btn-primary" type="submit">Submit</button>
+                    </form>
+                </div>
+                <hr/>
+                {comments.map(comment => (<div className="card">
+                    <div className="card-body">
+                        <p className="card-text">{comment.text}</p>
+                        <p className="card-text"><small className="text-muted">By {comment.author} - {comment.createdAt} - Votes: {comment.votes}</small></p>
+                    </div>
+                </div>))}
+            </div>
+    </article>);
+};
 
 export default Article;

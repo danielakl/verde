@@ -9,7 +9,7 @@
 3. Download, install and run client and server:
     ```sh
     git clone https://github.com/danielakl/verde
-    cd verde/client
+    cd verde/src/client
     npm install
     npm start&
     cd ../server

@@ -11,7 +11,7 @@ exports.up = function(knex, Promise) {
                     table.increments('id').unsigned().primary();
                     table.string('category').notNull();
                     table.timestamp('createdAt').notNull().defaultTo(knex.fn.now());
-                    table.timestamp('updatedAt');
+                    table.timestamp('updatedAt').nullable();
                 }).then(() => {
                     if (!results[1]) {
                         knex.schema.createTable('articles', table => {
@@ -22,7 +22,7 @@ exports.up = function(knex, Promise) {
                             table.text('text', 'mediumtext').notNull();
                             table.integer('votes').unsigned().notNull().defaultTo(0);
                             table.timestamp('createdAt').notNull().defaultTo(knex.fn.now());
-                            table.timestamp('updatedAt');
+                            table.timestamp('updatedAt').nullable();
                             table.foreign('categoryId').references('categories.id').onUpdate("CASCADE").onDelete('SET NULL');
                         }).then(() => {
                             if (!results[2]) {
@@ -33,7 +33,7 @@ exports.up = function(knex, Promise) {
                                     table.string('author').notNull().defaultTo('Anonymous');
                                     table.integer('votes').unsigned().notNull().defaultTo(0);
                                     table.timestamp('createdAt').notNull().defaultTo(knex.fn.now());
-                                    table.timestamp('updatedAt');
+                                    table.timestamp('updatedAt').nullable();
                                     table.foreign('articleId').references('articles.id').onUpdate("CASCADE").onDelete("CASCADE");
                                 }).then(resolve).catch(reject)
                             } else {
@@ -52,7 +52,7 @@ exports.up = function(knex, Promise) {
                         table.text('text', 'mediumtext').notNull();
                         table.integer('votes').unsigned().notNull().defaultTo(0);
                         table.timestamp('createdAt').notNull().defaultTo(knex.fn.now());
-                        table.timestamp('updatedAt');
+                        table.timestamp('updatedAt').nullable();
                         table.foreign('categoryId').references('categories.id').onUpdate("CASCADE").onDelete('SET NULL');
                     }).then(() => {
                         if (!results[2]) {
@@ -63,7 +63,7 @@ exports.up = function(knex, Promise) {
                                 table.string('author').notNull().defaultTo('Anonymous');
                                 table.integer('votes').unsigned().notNull().defaultTo(0);
                                 table.timestamp('createdAt').notNull().defaultTo(knex.fn.now());
-                                table.timestamp('updatedAt');
+                                table.timestamp('updatedAt').nullable();
                                 table.foreign('articleId').references('articles.id').onUpdate("CASCADE").onDelete("CASCADE");
                             }).then(resolve).catch(reject)
                         } else {
@@ -79,7 +79,7 @@ exports.up = function(knex, Promise) {
                             table.string('author').notNull().defaultTo('Anonymous');
                             table.integer('votes').unsigned().notNull().defaultTo(0);
                             table.timestamp('createdAt').notNull().defaultTo(knex.fn.now());
-                            table.timestamp('updatedAt');
+                            table.timestamp('updatedAt').nullable();
                             table.foreign('articleId').references('articles.id').onUpdate("CASCADE").onDelete("CASCADE");
                         }).then(resolve).catch(reject)
                     } else {

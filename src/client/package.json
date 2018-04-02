@@ -14,9 +14,11 @@
     "url": "git+https://github.com/danielakl/verde.git"
   },
   "dependencies": {
+    "babel-preset-stage-3": "^6.24.1",
     "bootstrap": "^4.0.0",
     "history": "^4.7.2",
     "jquery": "^3.3.1",
+    "moment": "^2.22.0",
     "popper.js": "^1.14.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",

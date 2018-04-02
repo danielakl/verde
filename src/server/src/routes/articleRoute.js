@@ -12,7 +12,8 @@ const router = express.Router();
  */
 router.get("/", (req: express$Request, res: express$Response) => {
     const query: string | void = req.query.query ? req.query.query.toString() : undefined;
-    ArticleService.getArticles(query).then(articles => {
+    const category: string | void = req.query.category ? req.query.category.toString() : undefined;
+    ArticleService.getArticles(query, category).then(articles => {
         res.json(articles);
     }).catch(error => {
         console.error(error);

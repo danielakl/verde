@@ -1,12 +1,27 @@
 // @flow
+'use strict';
 
-import * as React from "react";
+import React, {Component} from "react";
+import ArticleList from "./ArticleList";
+import Alert from "./Alert";
+import ArticleService from "../service/ArticleService";
 
-import Card from "./Card";
+class Home extends Component<{}> {
+    constructor(props: {}) {
+        super(props);
+        this.state = {articles: []};
+    }
 
-class Home extends React.Component<{}> {
+    componentDidMount() {
+        ArticleService.getArticles().then(articles => {
+            this.setState(prevState => ({...prevState, articles}));
+        }).catch(error => {
+            Alert.danger('Error retrieving articles: ' + error.message);
+        });
+    }
+
     render() {
-        return <Card title="Example App">Demonstration of React with Flow and server communication</Card>;
+        return <ArticleList articles={this.state.articles}/>;
     }
 }
 

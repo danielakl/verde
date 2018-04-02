@@ -20,9 +20,9 @@ class ArticleService {
         });
     }
 
-    static getArticles(query: string | void):Promise<Article[]> {
+    static getArticles(query?: string = "", category?: string = ""):Promise<Article[]> {
         return new Promise((resolve, reject) => {
-            ArticleDAO.getArticles(query)
+            ArticleDAO.getArticles(query, category)
                 .then(resolve)
                 .catch(reject);
         });

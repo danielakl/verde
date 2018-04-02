@@ -1,27 +1,34 @@
 // @flow
+"use strict";
 
-import * as React from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import {HashRouter, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
-import Alert from "./component/Alert";
-import Article from "./component/Article";
 import Home from "./component/Home";
-import NavigationBar from "./component/NavigationBar";
+import Alert from "./component/Alert";
+import NavBar from "./component/NavBar";
+import EditArticle from "./component/EditArticle";
+import NewArticle from "./component/NewArticle";
 import registerServiceWorker from "./registerServiceWorker";
 
 const root = document.getElementById('root');
 if (root) {
     ReactDOM.render(
-        <HashRouter>
-            <div>
-                <Alert />
-                <NavigationBar brand="React Example" links={[{to: '/articles', text: 'Article'}]} />
-                <Route exact path="/" component={Home} />
-                <Route path="/articles" component={Article} />
+        <Router>
+            <div className="container">
+                <Alert/>
+                <NavBar brand="The Verde" links={[{to: '/new', text: 'Create Article'}]}/>
+                <Switch>
+                    <Route path="/new" component={NewArticle}/>
+                    <Route path="/article/:id/edit" component={EditArticle}/>
+                    <Route path="/" component={Home}/>
+                </Switch>
             </div>
-        </HashRouter>,
+        </Router>,
         root
-    );
+    )
+} else {
+    throw new Error("Missing root element.");
 }
 registerServiceWorker();

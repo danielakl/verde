@@ -45,7 +45,7 @@ class Article extends BaseModel {
         category: {
             relation: Model.HasOneRelation,
             modelClass: path.join(__dirname, "Category"),
-            filter: query => query.select('category'),
+            filter: query => query.select('id', 'category'),
             join: {
                 from: "articles.categoryId",
                 to: "categories.id"

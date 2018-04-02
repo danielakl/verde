@@ -1,10 +1,11 @@
 // @flow
+'use strict';
 
 import Article from "../DTO/Article";
 
 class ArticleService {
-    static getArticles(): Promise<Article[]> {
-        return fetch('/api/article').then(response => {
+    static getArticles(query?: string = "", category?: string = ""): Promise<Article[]> {
+        return fetch(`/api/article?query=${query}&category=${category}`).then(response => {
             if (!response.ok) throw new Error(response.statusText);
             return response.json();
         });
@@ -17,9 +18,9 @@ class ArticleService {
         });
     }
 
-    static addArticle(title: string, abstract: string, text: string): Promise<number> {
-        let body = JSON.stringify({title: title, abstract: abstract, text: text});
-        return fetch('/api/article', {method: 'POST', headers: new Headers({'Content-Type': 'application/json'}), body: body}).then(response => {
+    static addArticle(title: string, abstract: string, text: string, categoryId: ?number, author: ?string): Promise<number> {
+        let body = JSON.stringify({title, abstract, text, categoryId, author});
+        return fetch('/api/article', {method: 'POST', headers: new Headers({'Content-Type': 'application/json'}), body}).then(response => {
             if (!response.ok) throw new Error(response.statusText);
             return response.json();
         });
