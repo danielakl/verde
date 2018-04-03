@@ -36,6 +36,7 @@ class Article extends Component<{}> {
             data: article
         };
 
+        this.handleArticleLike = this.handleArticleLike.bind(this);
         this.handleSubmitComment = this.handleSubmitComment.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
@@ -69,6 +70,21 @@ class Article extends Component<{}> {
                 Alert.danger("Error getting article data. " + error.message)
             });
         }
+    }
+
+    handleArticleLike(event) {
+        event.preventDefault();
+        ArticleService.getArticle(parseInt(this.state.data.id)).then(article => {
+            article.votes = article.votes + 1;
+            ArticleService.putArticle(article).then(article => {
+                this.setState(prevState => ({...prevState, data: {...prevState.data, votes: article.votes}}))
+            }).catch(error => {
+                Alert.danger("Error updating votes. " + error.message)
+            });
+        }).catch(error => {
+            Alert.danger("Error getting article. " + error.message)
+        });
+
     }
 
     render() {
@@ -112,7 +128,8 @@ class Article extends Component<{}> {
                             <div className="form-group">
                                 <textarea onChange={this.handleChange} name="commentText" className="form-control" rows="3">{this.state.commentText}</textarea>
                             </div>
-                            <button className="btn btn-primary" type="submit">Submit</button>
+                            <button className="btn btn-primary" type="submit">Submit Comment</button>
+                            <button className="btn btn-primary" onClick={this.handleArticleLike} type="button">Like this article</button>
                         </form>
                     </div>
                     <hr/>
