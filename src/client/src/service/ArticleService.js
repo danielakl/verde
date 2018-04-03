@@ -25,6 +25,14 @@ class ArticleService {
             return response.json();
         });
     }
+
+    static putArticle(article: Article): Promise<number> {
+        let body = JSON.stringify(article);
+        return fetch('/api/article/' + article.id, {method: 'PUT', headers: new Headers({'Content-Type': 'application/json'}), body}).then(response => {
+            if (!response.ok) throw new Error(response.statusText);
+            return response.json();
+        })
+    }
 }
 
 export default ArticleService;
