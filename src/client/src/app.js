@@ -11,6 +11,7 @@ import NavBar from "./component/NavBar";
 import EditArticle from "./component/EditArticle";
 import NewArticle from "./component/NewArticle";
 import registerServiceWorker from "./registerServiceWorker";
+import Article from "./component/Article";
 
 const root = document.getElementById('root');
 if (root) {
@@ -22,6 +23,7 @@ if (root) {
                 <Switch>
                     <Route path="/new" component={NewArticle}/>
                     <Route path="/article/:id/edit" component={EditArticle}/>
+                    <Route path="/article/:id" component={Article}/>
                     <Route path="/" component={Home}/>
                 </Switch>
             </div>

@@ -6,6 +6,7 @@ import bodyParser from 'body-parser';
 
 import articleRoute from "./routes/articleRoute";
 import categoryRoute from "./routes/categoryRoute";
+import commentRoute from "./routes/commentRoute";
 import Database from "./database/Database";
 
 const server = express();
@@ -19,6 +20,7 @@ Database();
 // REST API routes.
 server.use("/api/article", articleRoute);
 server.use("/api/category", categoryRoute);
+server.use("/api/comment", commentRoute);
 
 // Serve the React client
 server.use(express.static(__dirname + '/../../client'));
