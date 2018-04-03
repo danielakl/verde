@@ -3,11 +3,11 @@
 ## Instructions
 1. Install [Node.js](https://nodejs.org/en/).
 2. Install the Flow static type checker:
-    ```sh
+    ```bash
     npm install -g flow-bin
     ```
 3. Download, install and run client and server:
-    ```sh
+    ```bash
     git clone https://github.com/danielakl/verde
     cd verde/src/client
     npm install

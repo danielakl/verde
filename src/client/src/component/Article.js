@@ -6,6 +6,7 @@ import {Link} from 'react-router-dom';
 import Moment from 'moment';
 import ArticleService from "../service/ArticleService";
 import Alert from "./Alert";
+import CommentService from "../service/CommentService";
 
 class Article extends Component<{}> {
     constructor(props: {}) {
@@ -31,8 +32,31 @@ class Article extends Component<{}> {
             };
         this.state = {
             renderType: props.renderType ? props.renderType : 'article',
+            commentText: '',
             data: article
         };
+
+        this.handleSubmitComment = this.handleSubmitComment.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleSubmitComment(event) {
+        event.preventDefault();
+        CommentService.addComment(this.state.data.id, this.state.commentText, 'Anonymous')
+            .then(comment => {
+                this.setState(prevState => {
+                    const comments = [{text: comment.text, author: comment.author, createdAt: comment.createdAt, votes: comment.votes}];
+                    prevState.data.comments.forEach(comment => comments.push(comment));
+                    return {...prevState, data: {...prevState.data, comments: comments}}
+                });
+            })
+            .catch(error => {
+                Alert.danger("Error submitting comment. " + error.message);
+            });
+    }
+
+    handleChange(event) {
+        this.setState({[event.target.name]: event.target.value});
     }
 
     componentDidMount() {
@@ -84,9 +108,9 @@ class Article extends Component<{}> {
                     <hr/>
                     <div className="well">
                         <h4>Leave a Comment:</h4>
-                        <form>
+                        <form onSubmit={this.handleSubmitComment}>
                             <div className="form-group">
-                                <textarea className="form-control" rows="3"/>
+                                <textarea onChange={this.handleChange} name="commentText" className="form-control" rows="3">{this.state.commentText}</textarea>
                             </div>
                             <button className="btn btn-primary" type="submit">Submit</button>
                         </form>
