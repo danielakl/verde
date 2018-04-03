@@ -43,7 +43,7 @@ class ArticleDAO {
                 Article.relatedQuery('comments').count().as('numberOfComments'),
                 'articles.createdAt', 'articles.updatedAt'
                 ).where('articles.title', 'like', `%${query}%`).eager('[category]')
-                .orderByRaw('articles.createdAt DESC, articles.votes DESC');
+                .orderBy('articles.votes', 'DESC');
         }
         return Article.query().select(
             'articles.id', 'articles.title',
@@ -51,7 +51,7 @@ class ArticleDAO {
             'articles.votes',
             Article.relatedQuery('comments').count().as('numberOfComments'),
             'articles.createdAt', 'articles.updatedAt'
-        ).eager('[category]').orderByRaw('articles.createdAt DESC, articles.votes DESC');
+        ).eager('[category]').orderBy('articles.votes', 'DESC');
     }
 
     static createArticle(article: Object):Promise<Article> {
